@@ -649,9 +649,9 @@ document.querySelectorAll('[data-more]').forEach(btn=>btn.addEventListener('clic
 
 // Aviso breve
 const toast=document.querySelector('.toast'); let toastT;
-function showToast(msg){
+function showToast(msg,ms=2600){
   toast.textContent=msg; toast.classList.add('show');
-  clearTimeout(toastT); toastT=setTimeout(()=>toast.classList.remove('show'),2600);
+  clearTimeout(toastT); toastT=setTimeout(()=>toast.classList.remove('show'),ms);
 }
 const copyLink=()=>copyText(pageUrl());
 async function copyText(url){
@@ -667,13 +667,39 @@ const COPY_FAIL='No se pudo copiar. Copiá el link de la barra de direcciones';
 
 // Compartir
 document.querySelector('[data-share="whatsapp"]').href='https://wa.me/?text='+encodeURIComponent(SHARE_TEXT+' '+pageUrl());
+// Instagram: en el celular abre el menú de compartir con la imagen de la historia ya cargada
+// (se elige Instagram → Historia). Si el navegador no puede compartir archivos, o en la compu, se descarga la imagen.
+const STORY_SRC='historia-che-amigo-no-da.jpg';
+let storyFile=null, storyLoading=null;
+function loadStory(){
+  if(storyFile)return Promise.resolve(storyFile);
+  if(!storyLoading)storyLoading=fetch(STORY_SRC)
+    .then(r=>r.ok?r.blob():Promise.reject(new Error(r.status)))
+    .then(b=>storyFile=new File([b],STORY_SRC,{type:'image/jpeg'}))
+    .catch(()=>{storyLoading=null;return null});
+  return storyLoading;
+}
+// se precarga cuando el usuario se acerca a los botones, así el menú de compartir abre al toque
+const cierre=document.getElementById('cierre');
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();loadStory()}},{rootMargin:'800px 0px'});
+  io.observe(cierre);
+}
+function downloadStory(){
+  const a=document.createElement('a'); a.href=STORY_SRC; a.download=STORY_SRC;
+  document.body.appendChild(a); a.click(); a.remove();
+}
 document.querySelector('[data-share="instagram"]').addEventListener('click',async()=>{
   const phone=matchMedia('(hover: none) and (pointer: coarse)').matches;
-  if(phone&&navigator.share){
-    try{await navigator.share({title:'Che amigo, no da',text:SHARE_TEXT,url:pageUrl()});return}
-    catch(err){if(err&&err.name==='AbortError')return}
+  if(phone&&navigator.share&&navigator.canShare){
+    const file=storyFile||await loadStory();
+    if(file&&navigator.canShare({files:[file]})){
+      try{await navigator.share({files:[file]});return}
+      catch(err){if(err&&err.name==='AbortError')return}
+    }
   }
-  showToast(await copyLink()?'Link copiado, pegalo en tu historia':COPY_FAIL);
+  downloadStory();
+  showToast(phone?'Imagen descargada: subila a tu historia':'Imagen descargada: subila a tu historia desde el celu',3600);
 });
 document.querySelector('[data-copy]').addEventListener('click',async()=>{
   showToast(await copyLink()?'Link copiado':COPY_FAIL);
