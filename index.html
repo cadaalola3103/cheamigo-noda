@@ -20,7 +20,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 /* foco visible */
 a:focus-visible,button:focus-visible{outline:3px solid var(--blue);outline-offset:4px}
 .red :focus-visible,.blue :focus-visible,.black :focus-visible,.ccard.end :focus-visible{outline-color:#fff}
-.exit:focus-visible{outline-color:var(--red);box-shadow:0 0 0 4px #fff}
 .mob-help:focus-visible{outline-color:#fff;outline-offset:-9px}
 [tabindex="-1"]:focus{outline:none}
 /* logo (vector original del PDF de campaña) */
@@ -40,7 +39,8 @@ section{position:relative;overflow:hidden}
 header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:3px solid var(--ink)}
 header .wrap{display:flex;align-items:center;gap:28px;height:78px}
 header .wrap>nav{display:flex;gap:26px;margin-left:auto}
-header .wrap>nav a{font-stretch:115%;font-weight:700;font-size:13px;text-transform:uppercase;color:var(--ink);text-decoration:none;letter-spacing:.02em}
+header .wrap>nav a{font-stretch:115%;font-weight:700;font-size:13px;text-transform:uppercase;color:var(--ink);text-decoration:none;letter-spacing:.02em;white-space:nowrap}
+@media (max-width:1240px){header .wrap>nav{gap:18px}}
 .btn{display:inline-flex;align-items:center;gap:10px;font-stretch:125%;font-weight:800;text-transform:uppercase;font-size:14px;padding:15px 22px;border:3px solid currentColor;text-decoration:none;letter-spacing:.01em;white-space:nowrap}
 .btn.solid-red{background:var(--red);color:#fff;border-color:var(--red)}
 .btn.solid-ink{background:var(--ink);color:#fff;border-color:var(--ink)}
@@ -192,8 +192,6 @@ h2 .l{font-weight:400}
 footer{padding:46px 0;font-size:14px}
 footer .wrap{display:flex;gap:40px;align-items:center;justify-content:space-between;flex-wrap:wrap}
 footer p{max-width:640px;opacity:.85}
-/* salir rápido float */
-.exit{position:fixed;right:22px;bottom:22px;z-index:60}
 /* títulos fluidos: achican con la pantalla para que las palabras largas no se corten */
 .hero h1{font-size:min(76px,6.2vw)}
 h2{font-size:min(58px,5.2vw)}
@@ -268,7 +266,6 @@ h2{font-size:min(58px,5.2vw)}
   .cierre .bigphone{width:220px;right:-70px;top:auto;bottom:-40px}
   .acc .hd{font-size:15px}
   .acc .row.open{margin:0 -20px;padding:0 20px}
-  .exit{display:none}
   .mob-help{display:flex!important}
   footer{padding-bottom:110px}
 }
@@ -289,8 +286,7 @@ h2{font-size:min(58px,5.2vw)}
 .burger svg{fill:currentColor}
 .burger .i-close,.burger[aria-expanded="true"] .i-open{display:none}
 .burger[aria-expanded="true"] .i-close{display:block}
-header .btn.solid-ink{gap:0}
-@media (max-width:760px){.hide-m{display:none}header .btn.solid-ink{margin-left:auto}}
+@media (max-width:760px){header .burger{margin-left:auto}}
 /* menú desplegable (celular) */
 .mmenu{position:absolute;left:0;right:0;top:calc(100% + 3px);background:#fff;border-bottom:3px solid var(--ink);padding:6px 40px 22px;box-shadow:0 8px 0 rgba(11,11,11,.18)}
 @media (max-width:760px){.mmenu{padding:6px 20px 22px}}
@@ -319,16 +315,15 @@ header .btn.solid-ink{gap:0}
 <header>
   <div class="wrap">
     <svg class="logo logo-hdr" viewBox="0 0 881 607" width="104" height="72" style="color:var(--ink)" role="img" aria-label="Che amigo, no da"><use href="#logo" width="881" height="607"/></svg>
-    <nav aria-label="Secciones"><a href="#cadena">La cadena</a><a href="#que-hacer">Qué hacer</a><a href="#herramientas">Herramientas</a><a href="#ley">La ley</a><a href="#ayuda">Ayuda</a><a href="#sumate">Sumate</a></nav>
+    <nav aria-label="Secciones"><a href="#cadena">La cadena</a><a href="#que-hacer">Qué hacer</a><a href="#herramientas">Herramientas</a><a href="#ley">La ley</a><a href="#sumate">Sumate</a><a href="#voces">Quiénes somos</a></nav>
     <a class="btn solid-red sm help-top" href="#ayuda">Necesito ayuda</a>
-    <a class="btn solid-ink sm" href="https://www.google.com" data-exit aria-label="Salir rápido de este sitio" aria-keyshortcuts="Escape" title="Salir rápido (tecla Esc)">✕ Salir<span class="hide-m">&nbsp;rápido</span></a>
     <button class="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil">
       <svg class="i-open" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><rect y="0" width="30" height="4"/><rect y="10" width="30" height="4"/><rect y="20" width="30" height="4"/></svg>
       <svg class="i-close" width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M5 1 25 23M25 1 5 23" stroke="currentColor" stroke-width="4.5" fill="none"/></svg>
     </button>
   </div>
   <nav id="menu-movil" class="mmenu" aria-label="Menú" hidden>
-    <a href="#cadena">La cadena</a><a href="#que-hacer">Qué hacer</a><a href="#herramientas">Herramientas</a><a href="#ley">La ley</a><a href="#ayuda">Ayuda</a><a href="#sumate">Sumate</a>
+    <a href="#cadena">La cadena</a><a href="#que-hacer">Qué hacer</a><a href="#herramientas">Herramientas</a><a href="#ley">La ley</a><a href="#sumate">Sumate</a><a href="#voces">Quiénes somos</a>
     <a class="btn solid-red" href="#ayuda">Necesito ayuda</a>
   </nav>
 </header>
@@ -505,9 +500,9 @@ header .btn.solid-ink{gap:0}
 <section class="paper" id="voces">
   <svg class="tear top" data-tear="blue-top"></svg>
   <div class="wrap sec">
-    <span class="kicker">08 · Voces</span>
+    <span class="kicker">08 · Quiénes somos</span>
     <h2 class="wide"><span class="l">¿Por qué armamos</span> esta campaña?</h2>
-    <p class="lead">Te lo contamos en primera persona.</p>
+    <p class="lead">Somos parte del Programa de Jóvenes de Amnistía Internacional Argentina. Te lo contamos en primera persona.</p>
     <div class="voces">
       <figure class="voz px"><blockquote><p>El avance de la tecnología puede implicar un retroceso en los derechos. Necesitamos convocar a las masculinidades a cuestionar sus prácticas y formas de vincularse, y este proyecto busca contribuir, de alguna manera, a eso.</p></blockquote><figcaption>Lola<span>, 21 años</span></figcaption></figure>
       <figure class="voz px"><blockquote><p>Ojalá haya cada vez más varones a los que no les sea indiferente la violencia, y hagan algo en sus grupos de amigos para frenarla.</p></blockquote><figcaption>Lur<span>, 18 años</span></figcaption></figure>
@@ -519,7 +514,6 @@ header .btn.solid-ink{gap:0}
 <footer class="black">
   <div class="wrap"><svg class="logo" viewBox="0 0 881 607" width="150" height="103" style="color:var(--red)" aria-hidden="true"><use href="#logo" width="881" height="607"/></svg><p>«Che amigo, no da» es una campaña del Programa de Jóvenes de Amnistía Internacional Argentina para promover vínculos digitales más respetuosos y frenar la difusión de imágenes íntimas sin consentimiento.</p></div>
 </footer>
-<a class="btn solid-ink exit" href="https://www.google.com" data-exit aria-label="Salir rápido de este sitio" aria-keyshortcuts="Escape" title="Salir rápido (tecla Esc)">✕ Salir rápido</a>
 <a class="mob-help" href="#ayuda">Necesito ayuda <span aria-hidden="true">→</span></a>
 <div class="toast" role="status" aria-live="polite"></div>
 
@@ -601,15 +595,6 @@ const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const pageUrl=()=>location.href.split('#')[0];   // link de la página, sin el #sección
 const SHARE_TEXT='Che amigo, no da. La cadena también puede terminar con vos.';
 
-// Salir rápido: oculta la página, reemplaza la entrada del historial y va a Google (con "atrás" no se vuelve)
-function quickExit(){
-  document.documentElement.style.visibility='hidden';
-  try{history.replaceState(null,'',location.pathname+location.search)}catch(_){}
-  location.replace('https://www.google.com');
-}
-document.querySelectorAll('[data-exit]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();quickExit()}));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')quickExit()});
-
 // Menú desplegable (celular)
 const burger=document.querySelector('.burger'), menu=document.getElementById('menu-movil');
 function setMenu(open){
@@ -620,7 +605,7 @@ function setMenu(open){
 burger.addEventListener('click',()=>setMenu(menu.hidden));
 matchMedia('(min-width: 1101px)').addEventListener('change',e=>{if(e.matches)setMenu(false)});
 
-// Links a secciones: scroll suave sin sumar entradas al historial (para que "Salir rápido" no deje volver)
+// Links a secciones: scroll suave sin sumar entradas al historial
 document.addEventListener('click',e=>{
   const a=e.target.closest('a[href^="#"]');
   if(!a||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;
